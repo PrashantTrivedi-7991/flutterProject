@@ -8,12 +8,8 @@ class home_screen extends StatefulWidget {
   @override
   State<home_screen> createState() => _home_screenState();
 }
-
 class _home_screenState extends State<home_screen> {
   Completer<GoogleMapController> _controller=Completer();
-
-
-
   List<Marker> _marker=[];
   final List<Marker> _list=const[
     Marker(markerId: MarkerId('1'),

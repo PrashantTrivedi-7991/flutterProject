@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'EducationalSkill.dart';
 import 'My_Hobbies.dart';
@@ -39,6 +40,12 @@ class _skillState extends State<skill> {
                   ]
               )
           ),
+          child: SpinKitWave(
+            color: Colors.white,
+            size: 50.0,
+          ),
+
+
         ),
 
       ),

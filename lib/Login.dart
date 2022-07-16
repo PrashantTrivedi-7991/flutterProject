@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 import 'Home.dart';
 
@@ -45,84 +46,121 @@ class _LoginState extends State<Login> {
 
 
   showMobilePhoneWidget(context){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Spacer(),
-        Text("Verify Your Phone Number" , style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-        SizedBox(height: 7,),
-        SizedBox(height: 20,),
-        Center(
-          child:       TextField(
+    return Scaffold(
+        appBar: PreferredSize(
 
-            controller: phoneController,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12) ),
-                hintText: "Enter Your PhoneNumber"
-            ),
-          ),
+            preferredSize: Size.fromHeight(4),
+            child: NewGradientAppBar(
+              gradient: LinearGradient(
+                  colors: [Colors.deepPurple,
+                    Colors.yellowAccent,
+                    Colors.cyan,
+                    Colors.greenAccent
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter),
+            )),
+      body: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [
+                  Colors.pink,
+                  Colors.lightGreen
+                ]
+            )
         ),
-        SizedBox(height: 20,),
-        ElevatedButton(onPressed: ()  async{
-          await _auth.verifyPhoneNumber(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Spacer(),
+            Text("Verify Your Phone Number" , style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
+            SizedBox(height: 7,),
+            SizedBox(height: 20,),
+            Center(
+              child:       TextField(
 
-              phoneNumber: "+91${phoneController.text}",
-              verificationCompleted: (phoneAuthCredential) async{
+                controller: phoneController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12) ),
+                    hintText: "Enter Your PhoneNumber"
+                ),
+              ),
+            ),
+            SizedBox(height: 20,),
+            ElevatedButton(onPressed: ()  async{
+              await _auth.verifyPhoneNumber(
+
+                  phoneNumber: "+91${phoneController.text}",
+                  verificationCompleted: (phoneAuthCredential) async{
 
 
-              },
-              verificationFailed: (verificationFailed){
-                print(verificationFailed);
-              },
+                  },
+                  verificationFailed: (verificationFailed){
+                    print(verificationFailed);
+                  },
 
-              codeSent: (verificationID, resendingToken) async{
-                setState(() {
+                  codeSent: (verificationID, resendingToken) async{
+                    setState(() {
 
-                  currentState = LoginScreen.SHOW_OTP_FORM_WIDGET;
-                  this.verificationID = verificationID;
-                });
-              },
-              codeAutoRetrievalTimeout: (verificationID) async{
+                      currentState = LoginScreen.SHOW_OTP_FORM_WIDGET;
+                      this.verificationID = verificationID;
+                    });
+                  },
+                  codeAutoRetrievalTimeout: (verificationID) async{
 
-              }
-          );
-        }, child: Text("Send OTP")),
-        SizedBox(height: 16,),
-        Spacer()
-      ],
+                  }
+              );
+            }, child: Text("Send OTP")),
+            SizedBox(height: 16,),
+            Spacer()
+          ],
+        ),
+      ),
     );
   }
 
 
   showOtpFormWidget(context){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Spacer(),
-        Text("ENTER YOUR OTP" , style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-        SizedBox(height: 7,),
-        SizedBox(height: 20,),
-        Center(
-          child:       TextField(
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [
+                Colors.deepOrangeAccent,
+                Colors.cyan
+              ]
+          )
+      ),
 
-            controller: otpController,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12) ),
-                hintText: "Enter Your OTP"
+
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Spacer(),
+          Text("ENTER YOUR OTP" , style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+          SizedBox(height: 7,),
+          SizedBox(height: 20,),
+          Center(
+            child:       TextField(
+
+              controller: otpController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12) ),
+                  hintText: "Enter Your OTP"
+              ),
             ),
           ),
-        ),
-        SizedBox(height: 20,),
-        ElevatedButton(onPressed: () {
+          SizedBox(height: 20,),
+          ElevatedButton(onPressed: () {
 
-          AuthCredential phoneAuthCredential = PhoneAuthProvider.credential(verificationId: verificationID, smsCode: otpController.text);
-          signInWithPhoneAuthCred(phoneAuthCredential);
-        }, child: Text("Verify")),
-        SizedBox(height: 16,),
-        Spacer()
-      ],
+            AuthCredential phoneAuthCredential = PhoneAuthProvider.credential(verificationId: verificationID, smsCode: otpController.text);
+            signInWithPhoneAuthCred(phoneAuthCredential);
+          }, child: Text("Verify")),
+          SizedBox(height: 16,),
+          Spacer()
+        ],
+      ),
     );
   }
 

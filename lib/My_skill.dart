@@ -1,3 +1,5 @@
+import 'package:finalproject_by_prashant/My_profie.dart';
+import 'package:finalproject_by_prashant/portfoliyodemo.dart';
 import 'package:flutter/material.dart';
 
 import 'EducationalSkill.dart';
@@ -39,7 +41,35 @@ class _My_skillState extends State<My_skill> {
             child: Column(
               children: [
                 ListTile(
+                  leading:Icon(Icons.image) ,
+                  title: Text("My_profile_image"),
+                  trailing:Icon(Icons.arrow_forward_ios) ,
+                  onTap: ()
+                  {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)
+                    {
+                      return My_profile();
+                    }));
+
+
+                  },
+                ),
+                ListTile(
                   leading:Icon(Icons.person) ,
+                  title: Text("My_portfoliyo"),
+                  trailing:Icon(Icons.arrow_forward_ios) ,
+                  onTap: ()
+                  {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)
+                    {
+                      return portfoliyodemo();
+                    }));
+
+
+                  },
+                ),
+                ListTile(
+                  leading:Icon(Icons.ac_unit_rounded) ,
                   title: Text("_Skill"),
                   trailing:Icon(Icons.arrow_forward_ios) ,
                   onTap: ()
